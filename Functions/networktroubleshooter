@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "what is your network card [ex :- wlan0]"
+read networkcard
+airmon-ng stop "$networkcard"mon
+service NetworkManager restart
