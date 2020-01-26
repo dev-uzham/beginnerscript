@@ -26,15 +26,15 @@ then
 if [ "$choice" = "1" ];
 	then
 		cd ./Functions
-		./apkcreator
+		sh apkcreator
 elif [ "$choice" = "2" ];
 	then
 		cd ./Functions
-		./deauther
+		sh deauther
 elif [ "$choice" = "3" ]; 	
 	then
 		cd ./Functions
-		./networktroubleshooter
+		sh networktroubleshooter
 fi
 
 elif [ "$decision" = "Y" ];
@@ -51,15 +51,15 @@ then
 if [ "$choice" = "1" ];
 	then
 		cd ./Functions
-		./apkcreator
+		sh apkcreator
 elif [ "$choice" = "2" ];
 	then
 		cd ./Functions
-		./deauther
+		sh deauther
 elif [ "$choice" = "3" ];
 	then
 		cd ./Functions
-		./networktroubleshooter
+		sh networktroubleshooter
 elif [ "$choice" = "4" ];
 	then
 		cd ./export
@@ -67,7 +67,7 @@ elif [ "$choice" = "4" ];
 		cd ..
 		echo "Completed Cleaning"
 		sleep 3
-		./MainScript.sh
+		sh MainScript.sh
 fi
 else
 	echo "Thank You"
